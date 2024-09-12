@@ -10,10 +10,10 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    
+ 
     let newErrors = {};
 
-    
+
     if (!serviceName) {
       newErrors.serviceName = 'Service Name is required.';
     }
@@ -32,7 +32,7 @@ function App() {
     }
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+      setErrors(newErrors); 
       return;
     }
 
@@ -41,7 +41,7 @@ function App() {
     console.log('Username:', username);
     console.log('Password:', password);
 
-   
+    
     setServiceName('');
     setUsername('');
     setPassword('');
