@@ -43,6 +43,14 @@ nav a:hover {
   color: #e0a80d;
 }
 
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: -15px;
+  margin-bottom: 15px;
+}
+
+
 
 .hero {
   background-color: #abdff48c;
