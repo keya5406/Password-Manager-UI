@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Manager = ({ setErrors }) => {
+const CredentialForm = ({ setErrors }) => {
   const [serviceName, setServiceName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +28,6 @@ const Manager = ({ setErrors }) => {
     }
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
       setFormErrors(newErrors);
       return;
     }
@@ -105,4 +104,4 @@ const Manager = ({ setErrors }) => {
   );
 };
 
-export default Manager;
+export default CredentialForm;

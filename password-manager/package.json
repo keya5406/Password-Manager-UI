@@ -16,7 +16,6 @@
     "security"
   ],
   "author": "keya",
-  "license": "ISC",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -37,7 +36,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-
     "tailwindcss": "^3.4.13"
   }
- }
+}
