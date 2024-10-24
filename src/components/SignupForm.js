@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import CryptoJS from 'crypto-js';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Email from './Email';
+import Password from './Password';
+import Button from './Button';
+
 
 const SignupForm = () => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [masterPassword, setMasterPassword] = useState('');
@@ -17,7 +21,7 @@ const SignupForm = () => {
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    const generateSalt = () => { 
+    const generateSalt = () => {
         return CryptoJS.lib.WordArray.random(128 / 8).toString();
     };
 
@@ -47,11 +51,11 @@ const SignupForm = () => {
             setError(newErrors);
             return;
         }
-        const salt = generateSalt(); 
-        const hashedPassword = hashPassword(masterPassword, salt); 
+        const salt = generateSalt();
+        const hashedPassword = hashPassword(masterPassword, salt);
 
         console.log('Email:', email);
-        console.log('Generated Salt:', salt); 
+        console.log('Generated Salt:', salt);
         console.log("Password:", masterPassword);
         console.log('Hashed Password:', hashedPassword);
 
@@ -68,52 +72,10 @@ const SignupForm = () => {
         >
             <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
-            <div className="mb-4">
-                <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                    Email:
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email-Id"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                />
-                {error.email && <p className="text-red-500 text-sm">{error.email}</p>}
-            </div>
+            <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
+            <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
+            <Button text="Sign Up" />
 
-            <div className="mb-6">
-                <label
-                    htmlFor="masterPassword"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                    Master Password:
-                </label>
-                <input
-                    type="password"
-                    id="masterPassword"
-                    value={masterPassword}
-                    placeholder="Enter Master-password"
-                    onChange={(e) => setMasterPassword(e.target.value)}
-                    required
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                />
-                {error.password && <p className="text-red-500 text-sm">{error.password}</p>}
-            </div>
-
-
-
-            <button
-                type="submit"
-                className="w-full py-2 bg-blue-400 text-white font-semibold rounded-md hover:bg-blue-900 transition duration-200 mt-4"
-            >
-                Sign Up
-            </button>
 
         </form>
     );
