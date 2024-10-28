@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Email from './Email';
 import Password from './Password';
 import Button from './Button';
+import axios from 'axios';
 
 
 const SignupForm = () => {
@@ -32,7 +33,7 @@ const SignupForm = () => {
         }).toString();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
         setError(newErrors);
@@ -54,12 +55,31 @@ const SignupForm = () => {
         const salt = generateSalt();
         const hashedPassword = hashPassword(masterPassword, salt);
 
-        console.log('Email:', email);
-        console.log('Generated Salt:', salt);
-        console.log("Password:", masterPassword);
-        console.log('Hashed Password:', hashedPassword);
+        console.log("sending");
+        try {
+            const response = await axios.post('http://localhost:8080/api/register', {
+                email: email,
+                hashedPassword: hashedPassword,
+                salt: salt,
 
-        navigate('/CredentialForm');
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+                }
+            });
+            // console.log('Email:', email);
+            // console.log('Generated Salt:', salt);
+            // console.log("Password:", masterPassword);
+            // console.log('Hashed Password:', hashedPassword);
+            console.log('Response:', response.data);
+
+            navigate('/CredentialForm');
+        } catch (err) {
+            console.error('Error during signup:', err);
+            setError({ api: 'Signup failed. Please try again.' });
+        }
+
 
         setEmail('');
         setMasterPassword('');
