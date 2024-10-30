@@ -57,7 +57,7 @@ const SignupForm = () => {
 
         console.log("sending");
         try {
-            const response = await axios.post('http://localhost:8080/api/register', {
+            const response = await axios.post('/api/register', {
                 email: email,
                 hashedPassword: hashedPassword,
                 salt: salt,
@@ -65,7 +65,7 @@ const SignupForm = () => {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+                    
                 }
             });
             // console.log('Email:', email);
