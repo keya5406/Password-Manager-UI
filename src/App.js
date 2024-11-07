@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import CredentialForm from './components/CredentialForm';
 import Footer from './components/Footer';
 import SignupForm from './components/SignupForm';
+import LoginForm from './components/LoginForm';
 function App() {
 
   return (
@@ -14,7 +15,8 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<SignupForm />} />
-          <Route path="/CredentialForm" element={<CredentialForm />} />
+          <Route path="/loginForm" element={<LoginForm />} />
+          <Route path="/credentialForm" element={<CredentialForm />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />

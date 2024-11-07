@@ -20,7 +20,7 @@ const SignupForm = () => {
         return emailRegex.test(email);
     };
 
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
     const generateSalt = () => {
         return CryptoJS.lib.WordArray.random(128 / 8).toString();
@@ -45,9 +45,8 @@ const SignupForm = () => {
         if (!masterPassword) {
             newErrors.password = 'Password is required.';
         } else if (!passwordPattern.test(masterPassword)) {
-            newErrors.password = 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.';
+            newErrors.password = 'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character.';
         }
-
         if (Object.keys(newErrors).length > 0) {
             setError(newErrors);
             return;
@@ -71,7 +70,7 @@ const SignupForm = () => {
             
             console.log('Response:', response.data);
 
-            navigate('/CredentialForm');
+            navigate('/loginForm');
         } catch (err) {
             console.error('Error during signup:', err);
             setError({ api: 'Signup failed. Please try again.' });
