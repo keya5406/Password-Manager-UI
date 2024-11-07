@@ -83,7 +83,7 @@ const LoginForm = () => {
                 hashedPassword,
             });
 
-            if (response.status === 200) {
+            if (response.data.success) {
                 navigate('/credentialForm');
                 setEmail('');
                 setMasterPassword('');
