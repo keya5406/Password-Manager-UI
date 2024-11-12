@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useMasterPassword } from './MasterPasswordContext';
+import CryptoJS from 'crypto-js';
+import axios from 'axios';
 
 const CredentialForm = ({ setErrors }) => {
   const [serviceName, setServiceName] = useState('');
@@ -6,7 +9,19 @@ const CredentialForm = ({ setErrors }) => {
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
 
-  const handleSubmit = (event) => {
+  const { masterPassword } = useMasterPassword();
+    const generateKeyFromMasterPassword = (masterPassword) => {
+    const salt = sessionStorage.getItem('salt') || CryptoJS.lib.WordArray.random(128 / 8);  
+    sessionStorage.setItem('salt', salt.toString());  
+    const key = CryptoJS.PBKDF2(masterPassword, salt, {
+      keySize: 256 / 32,
+      iterations: 1000,
+    });
+    return key;
+  };
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let newErrors = {};
 
@@ -32,9 +47,45 @@ const CredentialForm = ({ setErrors }) => {
       return;
     }
 
-    console.log('Service Name:', serviceName);
-    console.log('Username:', username);
-    console.log('Password:', password);
+    if (masterPassword) {
+      
+      const encryptionKey = generateKeyFromMasterPassword(masterPassword).toString(CryptoJS.enc.Hex);
+      console.log('Generated Encryption Key:', encryptionKey.toString);
+      
+      if (serviceName && username && password) {
+        const encryptedServiceName = CryptoJS.AES.encrypt(serviceName, encryptionKey).toString();
+        const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey).toString();
+        const encryptedPassword = CryptoJS.AES.encrypt(password, encryptionKey).toString();
+
+
+       
+          const payload = {
+            serviceName:encryptedServiceName,
+            username: encryptedUsername,
+            password: encryptedPassword
+          };
+          
+        console.log("payload",payload);
+        
+        try {
+          const response = await axios.post('/api/credentials', payload, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          if (response.status !== 201) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+          }
+          console.log("Data successfully sent to backend:", response.data);
+        } catch (error) {
+          console.error("Failed to send data to backend:", error);
+        }
+        
+      }
+    
+      
+
+    }
 
     setServiceName('');
     setUsername('');

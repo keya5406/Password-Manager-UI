@@ -20,7 +20,7 @@ const SignupForm = () => {
         return emailRegex.test(email);
     };
 
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,25}$/;
 
     const generateSalt = () => {
         return CryptoJS.lib.WordArray.random(128 / 8).toString();

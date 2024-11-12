@@ -5,14 +5,17 @@ import Email from './Email';
 import Password from './Password';
 import Button from './Button';
 import axios from 'axios';
+import { useMasterPassword } from './MasterPasswordContext';
 
 const LoginForm = () => {
     const navigate = useNavigate();
-
+    const { setMasterPassword } = useMasterPassword();
+    
     const [email, setEmail] = useState('');
-    const [masterPassword, setMasterPassword] = useState('');
+    const [masterPassword, setMasterPasswordState] = useState('');
     const [error, setError] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    
 
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -74,8 +77,7 @@ const LoginForm = () => {
             console.log("Salt not found or empty.");
             return;
         }
-
-        const hashedPassword = hashPassword(masterPassword, salt);
+            const hashedPassword = hashPassword(masterPassword, salt);
 
         try {
             const response = await axios.post('/api/login', {
@@ -84,9 +86,10 @@ const LoginForm = () => {
             });
 
             if (response.status === 200) {
+                setMasterPassword(masterPassword);
                 navigate('/credentialForm');
                 setEmail('');
-                setMasterPassword('');
+                setMasterPasswordState('');
             } else {
                 setError({ form: 'Invalid email or password.' });
             }
@@ -106,7 +109,7 @@ const LoginForm = () => {
             <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
 
             <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
-            <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
+            <Password value={masterPassword} onChange={(e) => setMasterPasswordState(e.target.value)} error={error.password} />
             <Button text={isLoading ? "Logging In..." : "Log In"} disabled={isLoading} />
             {error.form && <p className="text-red-500 mt-4">{error.form}</p>}
         </form>
