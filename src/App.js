@@ -8,6 +8,8 @@ import Footer from './components/Common/Footer';
 import SignupForm from './components/Auth/SignupForm';
 import { MasterPasswordProvider } from './components/MasterPasswordContext';
 import LoginForm from './components/Auth/LoginForm';
+import { MasterPasswordProvider } from './components/MasterPasswordContext';
+
 function App() {
 
   return (
