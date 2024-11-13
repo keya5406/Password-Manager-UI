@@ -54,7 +54,7 @@ const SignupForm = () => {
         const salt = generateSalt();
         const hashedPassword = hashPassword(masterPassword, salt);
 
-        console.log("sending");
+       
         try {
             const response = await axios.post('/api/register', {
                 email: email,
@@ -67,10 +67,7 @@ const SignupForm = () => {
                     
                 }
             });
-            // console.log('Email:', email);
-            // console.log('Generated Salt:', salt);
-            // console.log("Password:", masterPassword);
-            // console.log('Hashed Password:', hashedPassword);
+            
             console.log('Response:', response.data);
 
             navigate('/loginForm');
@@ -84,20 +81,29 @@ const SignupForm = () => {
         setMasterPassword('');
     };
 
+    const handleNavigateToLogin = () => {
+        navigate('/loginForm');
+    };
+
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="max-w-md mx-auto p-6 bg-blue-50 flex-grow w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 md:p-6 bg-blue-50 rounded-lg shadow-lg mt-20 space-y-0"
-        >
-            <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <div className="max-w-md mx-auto p-6 bg-blue-50 flex-grow w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 md:p-6 bg-blue-50 rounded-lg shadow-lg mt-20 space-y-0">
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
-            <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
-            <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
-            <Button text="Sign Up" />
+                <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
+                <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
+                
+               
+                <Button text="Sign Up" type="submit" />
+            </form>
 
-
-        </form>
+          
+            <div className="mt-1 text-center">
+                <Button text="Already have an account? Log In" onClick={handleNavigateToLogin} type="button" />
+            </div>
+        </div>
     );
 };
+
 
 export default SignupForm;
