@@ -55,7 +55,7 @@ const SignupForm = () => {
         const salt = generateSalt();
         const hashedPassword = hashPassword(masterPassword, salt);
 
-       
+
         try {
             const response = await axios.post('/api/register', {
                 email: email,
@@ -65,46 +65,57 @@ const SignupForm = () => {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    
+
                 }
             });
-            
-            console.log('Response:', response.data);
 
-            navigate('/CredentialForm');
+            if (response.status === 200) {
+                navigate('/loginForm');
+            }
         } catch (err) {
             console.error('Error during signup:', err);
-            setError({ api: 'Signup failed. Please try again.' });
+            if (err.response) {
+                if (err.response.status === 409) {
+                    setError({ email: 'This email is already registered. Please use a different email or log in.' });
+                } else if (err.response.status === 400) {
+                    setError({ api: 'Invalid data. Please check your input and try again.' });
+                } else if (err.response.status === 500) {
+                    setError({ api: 'Internal server error. Please try again later.' });
+                } else if (err.response.data && err.response.data.error) {
+                    setError({ api: err.response.data.error });
+                } else {
+                    setError({ api: 'Signup failed. Please try again.' });
+                }
+            }
         }
 
+            setEmail('');
+            setMasterPassword('');
+        };
 
-        setEmail('');
-        setMasterPassword('');
-    };
+        const handleNavigateToLogin = () => {
+            navigate('/loginForm');
+        };
 
-    const handleNavigateToLogin = () => {
-        navigate('/loginForm');
-    };
+        return (
+            <div className="max-w-md mx-auto p-6 bg-blue-50 flex-grow w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 md:p-6 bg-blue-50 rounded-lg shadow-lg mt-20 space-y-0">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
-    return (
-        <div className="max-w-md mx-auto p-6 bg-blue-50 flex-grow w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 md:p-6 bg-blue-50 rounded-lg shadow-lg mt-20 space-y-0">
-            <form onSubmit={handleSubmit} className="space-y-6">
-                <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+                    <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
+                    <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
 
-                <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
-                <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
-                
-               
-                <Button text="Sign Up" type="submit" />
-            </form>
 
-          
-            <div className="mt-1 text-center">
-                <Button text="Already have an account? Log In" onClick={handleNavigateToLogin} type="button" />
+                    <Button text="Sign Up" type="submit" />
+                </form>
+
+
+                <div className="mt-1 text-center">
+                    <Button text="Already have an account? Log In" onClick={handleNavigateToLogin} type="button" />
+                </div>
             </div>
-        </div>
-    );
-};
+        );
+    };
 
 
-export default SignupForm;
+    export default SignupForm;
