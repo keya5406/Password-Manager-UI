@@ -16,14 +16,16 @@
     "security"
   ],
   "author": "keya",
-  "proxy" : "http://localhost:3000",
-   "dependencies": {
+  "proxy": "http://localhost:3000",
+  "dependencies": {
     "axios": "^1.7.7",
     "crypto-js": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
     "react-router-dom": "^6.27.0",
     "react-scripts": "^5.0.1",
+    "react-spinners": "^0.14.1",
     "web-vitals": "^4.2.3"
   },
   "browserslist": {
