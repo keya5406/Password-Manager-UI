@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import passkey from './passkey.png';
-import menu from './menu.png';
+import passkey from '..Assets';
+import menu from '..Assets';
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
