@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Email from './Email';
-import Password from './Password';
-import Button from './Button';
-import Loader from './Loader';
+import Email from '..Common/Email';
+import Password from '..Common/Password';
+import Button from '..UI/Button';
+import Loader from '..UI/Loader';
 import useSignupForm from './useSignupForm';
-import SuccessMessage from './SuccessMessage';
+import SuccessMessage from '..UI/SuccessMessage';
 
 
 const SignupForm = () => {

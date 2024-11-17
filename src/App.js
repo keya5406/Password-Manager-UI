@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './App.css';
 import './styles/output.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import CredentialForm from './components/CredentialForm';
-import Footer from './components/Footer';
-import SignupForm from './components/SignupForm';
-import LoginForm from './components/LoginForm';
+import NavBar from './components/Common/NavBar';
+import CredentialForm from './components/Credential/CredentialForm';
+import Footer from './components/Common/Footer';
+import SignupForm from './components/Auth/SignupForm';
+import LoginForm from './components/Auth/SignupForm';
 function App() {
 
   return (
