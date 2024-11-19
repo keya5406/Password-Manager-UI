@@ -6,7 +6,7 @@ import NavBar from './components/Common/NavBar';
 import CredentialForm from './components/Credential/CredentialForm';
 import Footer from './components/Common/Footer';
 import SignupForm from './components/Auth/SignupForm';
-import LoginForm from './components/Auth/SignupForm';
+import LoginForm from './components/Auth/LoginForm';
 function App() {
 
   return (

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { registerUser } from './api';
-import { generateSalt, hashPassword, isValidEmail, passwordPattern } from '..Utils/cryptoUtils';
+import { generateSalt, hashPassword, isValidEmail, passwordPattern } from '../Utils/cryptoUtils';
 
 const useSignupForm = (navigate) => {
     const [email, setEmail] = useState('');
