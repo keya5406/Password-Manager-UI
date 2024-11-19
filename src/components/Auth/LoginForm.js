@@ -2,9 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Email from '../Common/Email';
 import Password from '../Common/Password';
-import Button from '..UI/Button';
+import Button from '../UI/Button';
 import useLogin from './useLogin'; 
-import Loader from '..UI/Loader';
+import Loader from '../UI/Loader';
 
 const LoginForm = () => {
     const navigate = useNavigate();

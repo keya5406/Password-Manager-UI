@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { loginUser } from './loginApi'; 
-import { hashPassword } from '..Utils/cryptoUtils'; 
+import { hashPassword } from '../Utils/cryptoUtils'; 
 
 const useLogin = () => {
     const [email, setEmail] = useState('');
