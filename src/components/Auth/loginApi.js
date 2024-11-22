@@ -1,55 +1,22 @@
 import axios from 'axios';
 
-
-export const loginUser = async (email, hashedPassword, setError) => {
+export const fetchSalt = async (email) => {
+    
     try {
-        const response = await axios.post('/api/login', {
-            email,
-            hashedPassword,
-        });
-
-        if (response.status === 200 && response.data.success) {
-            return true;
-        }
-        setError((prev) => ({
-            ...prev,
-            form: response.data.message || 'Login failed. Please try again.',
-        }));
-        return false;
+        const response = await axios.get('/api/salt', { params: { email } });
+        return response.data?.Salt;
     } catch (error) {
-        if (error.response) {
+        throw new Error('No account found with this email. Please check and try again.');
 
-            switch (error.response.status) {
-                case 401:
-                    setError((prev) => ({
-                        ...prev,
-                        form: 'Password is incorrect.',
-                    }));
-                    break;
-                case 404:
-                    setError((prev) => ({
-                        ...prev,
-                        form: 'Email address not found.',
-                    }));
-                    break;
-                case 500:
-                    setError((prev) => ({
-                        ...prev,
-                        form: 'Server error. Please try again later.',
-                    }));
-                    break;
-                default:
-                    setError((prev) => ({
-                        ...prev,
-                        form: 'An unexpected error occurred. Please try again.',
-                    }));
-            }
-        } else {
-            setError((prev) => ({
-                ...prev,
-                form: 'Network error. Please check your connection and try again.',
-            }));
-        }
-        return false;
+
+    }
+};
+
+export const login = async (email, hashedPassword) => {
+    try {
+        const response = await axios.post('/api/login', { email, hashedPassword });
+        return response; 
+    } catch (error) {
+        throw new Error('Email or password is incorrect. Please try again.');
     }
 };
