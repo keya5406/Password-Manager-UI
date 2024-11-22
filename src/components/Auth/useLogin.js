@@ -1,80 +1,61 @@
 import { useState } from 'react';
-import { loginUser } from './loginApi'; 
-import { hashPassword } from '../Utils/cryptoUtils'; 
+import { fetchSalt, login } from './loginApi.js';
+import { hashPassword } from '../Utils/cryptoUtils.js';
+import { useNavigate } from 'react-router-dom';
 
-const useLogin = () => {
+export const useLogin = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [masterPassword, setMasterPassword] = useState('');
     const [error, setError] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-
- 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setError({});
-
-        const newErrors = {};
-
-        if (!email || !isValidEmail(email)) {
-            newErrors.email = 'Please enter a valid email address.';
-        }
-
-        if (!masterPassword) {
-            newErrors.password = 'Password is required.';
-        } else if (masterPassword.length < 8) {
-            newErrors.password = 'Password must be at least 8 characters long.';
-        }
-
-        if (Object.keys(newErrors).length > 0) {
-            setError(newErrors);
-            setIsLoading(false);
-            return;
-        }
-
-        const salt = await fetchSalt();
-        if (!salt) {
-            setIsLoading(false);
-            return;
-        }
-
-        const hashedPassword = hashPassword(masterPassword, salt);
-
-        const loginSuccess = await loginUser(email, hashedPassword, setError);
-
-        if (loginSuccess) {
-            setEmail('');
-            setMasterPassword('');
-        } else {
-            setIsLoading(false);
-        }
-    };
-
-   
-    const fetchSalt = async () => {
-        try {
-            const response = await axios.get('/api/salt', { params: { email } });
-            return response.data?.Salt;
-        } catch (error) {
-            setError({ form: 'Could not retrieve salt. Please try again.' });
-            return null;
-        }
-    };
 
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError({});
+
+        const newErrors = {};
+        if (!isValidEmail(email)) newErrors.email = 'Please enter a valid email address.';
+        if (!masterPassword) newErrors.password = 'Password is required.';
+        else if (masterPassword.length < 8) newErrors.password = 'Password must be at least 8 characters long.';
+
+        if (Object.keys(newErrors).length > 0) {
+            setError(newErrors);
+            setIsLoading(false);
+            return;
+        }
+        try {
+            const salt = await fetchSalt(email);
+            if (!salt) throw new Error("Unable to verify your account. Please try again.");
+
+            const hashedPassword = hashPassword(masterPassword, salt);
+            const response = await login(email, hashedPassword);
+
+            if (response.status === 200) {
+                navigate('/credentialForm');
+            } else {
+                setError({ form: 'Invalid email or password.' });
+            }
+        } catch (error) {
+            setError({ form: error.message });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return {
         email,
+        setEmail,
         masterPassword,
+        setMasterPassword,
         error,
         isLoading,
-        setEmail,
-        setMasterPassword,
         handleSubmit,
     };
 };
-
-export default useLogin;

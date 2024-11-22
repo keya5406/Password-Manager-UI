@@ -1,27 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from './useLogin';
 import Email from '../Common/Email';
-import Password from '../Common/Password';
-import Button from '../UI/Button';
-import useLogin from './useLogin'; 
+import Password from '../Common/Password.js';
+import Button from '../UI/Button.js';
 import Loader from '../UI/Loader';
 
 const LoginForm = () => {
     const navigate = useNavigate();
-
     const {
         email,
+        setEmail,
         masterPassword,
+        setMasterPassword,
         error,
         isLoading,
-        setEmail,
-        setMasterPassword,
         handleSubmit,
-    } = useLogin(); 
+    } = useLogin(navigate);
 
-    const handleSuccessfulLogin = () => {
-        navigate('/credentialForm');
-    };
+    
     return (
         <form
             onSubmit={handleSubmit}
@@ -31,13 +28,7 @@ const LoginForm = () => {
 
             <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
             <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
-            {isLoading ? (
-                <div className="mt-4">
-                    <Loader color="#3498db" size={30} /> 
-                </div>
-            ) : (
-                <Button text="Log In" disabled={isLoading} /> 
-            )}
+            {isLoading ? <Loader /> : <Button text="Log In" type="submit" />}
             {error.form && <p className="text-red-500 mt-4">{error.form}</p>}
         </form>
     );
