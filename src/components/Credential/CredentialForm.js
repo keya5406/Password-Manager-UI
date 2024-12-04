@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMasterPassword } from './MasterPasswordContext';
+import { useMasterPassword } from '../Auth/MasterPasswordContext';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 

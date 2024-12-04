@@ -6,9 +6,8 @@ import NavBar from './components/Common/NavBar';
 import CredentialForm from './components/Credential/CredentialForm';
 import Footer from './components/Common/Footer';
 import SignupForm from './components/Auth/SignupForm';
-import { MasterPasswordProvider } from './components/MasterPasswordContext';
+import { MasterPasswordProvider } from './components/Auth/MasterPasswordContext';
 import LoginForm from './components/Auth/LoginForm';
-import { MasterPasswordProvider } from './components/MasterPasswordContext';
 
 function App() {
 
