@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './App.css';
 import './styles/output.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import CredentialForm from './components/CredentialForm';
-import Footer from './components/Footer';
-import SignupForm from './components/SignupForm';
+import NavBar from './components/Common/NavBar';
+import CredentialForm from './components/Credential/CredentialForm';
+import Footer from './components/Common/Footer';
+import SignupForm from './components/Auth/SignupForm';
+import LoginForm from './components/Auth/LoginForm';
 function App() {
 
   return (
@@ -14,7 +15,8 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<SignupForm />} />
-          <Route path="/CredentialForm" element={<CredentialForm />} />
+          <Route path="/loginForm" element={<LoginForm />} />
+          <Route path="/credentialForm" element={<CredentialForm />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
