@@ -12,7 +12,7 @@ const LoginForm = () => {
         email,
         setEmail,
         masterPassword,
-        setMasterPassword,
+        setMasterPasswordState,
         error,
         isLoading,
         handleSubmit,
@@ -27,7 +27,7 @@ const LoginForm = () => {
             <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
 
             <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
-            <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
+            <Password value={masterPassword} onChange={(e) => setMasterPasswordState(e.target.value)} error={error.password} />
             {isLoading ? <Loader /> : <Button text="Log In" type="submit" />}
             {error.form && <p className="text-red-500 mt-4">{error.form}</p>}
         </form>
