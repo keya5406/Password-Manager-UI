@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import passkey from '../Assets/passkey.png';
 import menu from '../Assets/menu.png';
+import UserMenu from './UserMenu';
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,16 +36,19 @@ const NavBar = () => {
       </h1>
 
       {/* Desktop menu */}
-      <ul className="hidden md:flex space-x-4">
+      <ul className="hidden md:flex space-x-3">
         <li><a href="#home" className="hover:font-bold text-lg md:text-xl">Home</a></li>
         <li><a href="#features" className="hover:font-bold text-lg md:text-xl">Features</a></li>
         <li><a href="#contact" className="hover:font-bold text-lg md:text-xl">Contact</a></li>
+        <UserMenu />
       </ul>
 
       {/* Mobile menu button */}
+      <div className="md:hidden flex items-center absolute top-1 right-0 mt-2 mr-2">
+      
       <button
         onClick={toggleMenu}
-        className="md:hidden flex items-center absolute top-1 right-0 mt-2 mr-2 px-3 py-2 rounded text-black w-16 "
+        className= "flex items-center px-3 py-2 rounded text-black"
       >
         <svg className="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 6h14M3 12h14M3 18h14" />
@@ -55,6 +59,8 @@ const NavBar = () => {
           className="h-6 w-6"
         />
       </button>
+      <UserMenu />
+      </div>
 
       {/* Mobile menu */}
       {isOpen && (
