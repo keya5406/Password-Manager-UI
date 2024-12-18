@@ -27,8 +27,19 @@ const LoginForm = () => {
             >
                 <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
 
-                <Email value={email} onChange={(e) => setUserEmail(e.target.value)} error={error.email} />
-                <Password value={masterPassword} onChange={(e) => setMasterPasswordState(e.target.value)} error={error.password} />
+                <Email
+                    value={email}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                    error={error.email}
+                />
+                <Password
+                    value={masterPassword}
+                    onChange={(e) => setMasterPasswordState(e.target.value)}
+                    error={error.password}
+                    id="masterPassword"
+                    label="Master Password:"
+                    placeholder="Enter Master Password"
+                />
                 {isLoading ? <Loader /> : <Button text="Log In" type="submit" />}
                 {error.form && <p className="text-red-500 mt-4">{error.form}</p>}
             </form>

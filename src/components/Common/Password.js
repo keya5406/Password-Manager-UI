@@ -1,18 +1,18 @@
 import React from 'react';
 
-const Password = ({ value, onChange, error }) => {
+const Password = ({ value, onChange, error, id, label, placeholder }) => {
     return (
         <div className="mb-6">
             <label
-                htmlFor="masterPassword"
+                htmlFor={id}
                 className="block text-sm font-medium text-gray-700 mb-1"
             >
-                Master Password:
+                {label}
             </label>
             <input
                 type="password"
-                id="masterPassword"
-                placeholder="Enter Master-password"
+                id={id}
+                placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 required
