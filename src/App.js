@@ -10,6 +10,7 @@ import { MasterPasswordProvider } from './components/Context/MasterPasswordConte
 import { EmailProvider } from './components/Context/EmailContext';
 import LoginForm from './components/Auth/LoginForm';
 import CredentialDashboard from "./components/Credential/CredentialDashboard";
+import EditCredential from './components/Credential/EditCredential';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/loginForm" element={<LoginForm />} />
             <Route path="/credentialForm" element={<CredentialForm />} />
             <Route path="/credential-dashboard" element={<CredentialDashboard />} />
+            <Route path="/edit-credential/:id" element={<EditCredential />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <Footer />

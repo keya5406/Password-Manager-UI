@@ -12,22 +12,23 @@ const CredentialDashboard = () => {
     useEffect(() => {
         const loadCredentials = async () => {
             if (!masterPassword) return;
-
             try {
                 const encryptedData = await fetchCredentials();
                 const decryptedCredentials = await Promise.all(
-                    encryptedData.map(async (credential) => ({
-                        serviceName: await decryptCredential(credential.serviceName, masterPassword),
-                        username: await decryptCredential(credential.username, masterPassword),
-                        password: await decryptCredential(credential.password, masterPassword),
-                    }))
+                    encryptedData.map(async (credential) => {
+                        return {
+                            id: credential.id,
+                            serviceName: await decryptCredential(credential.serviceName, masterPassword),
+                            username: await decryptCredential(credential.username, masterPassword),
+                            password: await decryptCredential(credential.password, masterPassword),
+                        };
+                    })
                 );
                 setCredentials(decryptedCredentials);
             } catch (error) {
                 console.error("Error loading credentials:", error);
             }
         };
-
         loadCredentials();
     }, [masterPassword, decryptCredential]);
 
