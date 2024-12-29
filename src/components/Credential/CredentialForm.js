@@ -4,12 +4,14 @@ import useHandleSubmit from './useHandleSubmit';
 import Button from '../UI/Button';
 import FormInput from './FormInput';
 import { useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const CredentialForm = () => {
   const navigate = useNavigate();
   const [serviceName, setServiceName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { masterPassword } = useMasterPassword();
   const { handleSubmit, formErrors } = useHandleSubmit(masterPassword);
 
@@ -45,16 +47,27 @@ const CredentialForm = () => {
           onChange={(e) => setUsername(e.target.value)}
           errorMessage={formErrors.username}
         />
-        <FormInput
-          label="Password"
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          errorMessage={formErrors.password}
-        />
+        <div className="relative">
+          <FormInput
+            label="Password"
+            type={showPassword ? 'text' : 'password'} 
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            errorMessage={formErrors.password}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)} 
+            className="absolute right-3 top-10"
+          >
+            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+          </button>
+        </div>
+
+        
         <Button type="submit" text="Add Password">
           <lord-icon
             src="https://cdn.lordicon.com/jgnvfzqg.json"

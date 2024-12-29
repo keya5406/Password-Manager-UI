@@ -5,6 +5,7 @@ import FormInput from "./FormInput";
 import Button from "../UI/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useKeyGenerator } from "./keyGenerator";
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import CryptoJS from "crypto-js";
 
 const EditCredential = () => {
@@ -13,6 +14,8 @@ const EditCredential = () => {
     const { masterPassword } = useMasterPassword();
     const { generateKeyFromMasterPassword } = useKeyGenerator();
     const { decryptCredential } = useCredentialDecryption();
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const [serviceName, setServiceName] = useState("");
     const [username, setUsername] = useState("");
@@ -20,6 +23,9 @@ const EditCredential = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [fetched, setFetched] = useState(false);
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    }
 
     useEffect(() => {
         const fetchCredential = async () => {
@@ -151,16 +157,25 @@ const EditCredential = () => {
                     name="username"
                     placeholder="Enter Username"
                 />
-
+            <div className="relative">
                 <FormInput
                     label="Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     name="password"
                     placeholder="Enter Password"
                 />
+                <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-3 top-10 "
+                >
+                    {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                </button>
+                </div>
+
 
                 <Button type="submit" text="Update Credential" />
             </form>
