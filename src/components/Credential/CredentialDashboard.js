@@ -35,7 +35,7 @@ const CredentialDashboard = () => {
     return (
         <div className="p-8">
             <h1 className="text-3xl font-bold mb-6">Password Library</h1>
-            <CredentialsList credentials={credentials} />
+            <CredentialsList credentials={credentials} setCredentials={setCredentials}/>
         </div>
     );
 };

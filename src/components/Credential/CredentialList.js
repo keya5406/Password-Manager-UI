@@ -1,14 +1,15 @@
 import React from "react";
 import { PiUserListFill } from "react-icons/pi";
-import { useNavigate } from "react-router-dom"; 
-import { AiFillEdit } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
+import { handleDelete } from './handleDelete';
 
-const CredentialsList = ({ credentials }) => {
+const CredentialsList = ({ credentials, setCredentials}) => {
   console.log("Received Credentials:", credentials);
   const navigate = useNavigate();
 
   const handleEditClick = (credentialId) => {
-       navigate(`/edit-credential/${credentialId}`);
+    navigate(`/edit-credential/${credentialId}`);
   };
 
   return (
@@ -42,11 +43,18 @@ const CredentialsList = ({ credentials }) => {
               </p>
 
               <button
-                className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors"
+                className="text-blue-900 hover:text-gray-700"
                 onClick={() => handleEditClick(credential.id)}
               >
-                <AiFillEdit className="w-5 h-5" /> 
+                <AiFillEdit className="w-5 h-5" />
               </button>
+              <button
+                className="text-red-500 hover:text-red-700 ml-3"
+                onClick={() => handleDelete(credential.id, setCredentials)} 
+                >
+                <AiOutlineDelete className="w-5 h-5" />
+              </button>
+
             </div>
           ))}
         </div>
