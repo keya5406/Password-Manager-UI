@@ -1,41 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { fetchCredentials } from "./CredentialApi.js";
-import { useCredentialDecryption } from "./Decryption.js";
 import CredentialsList from "./CredentialList.js";
 import { useMasterPassword } from "../Context/MasterPasswordContext.js";
+import { useEmail } from "../Context/EmailContext.js";
+import { useNavigate } from "react-router-dom";
 
 const CredentialDashboard = () => {
     const [credentials, setCredentials] = useState([]);
     const { masterPassword } = useMasterPassword();
-    const { decryptCredential } = useCredentialDecryption();
-
+    const { email } = useEmail();
+    const navigate = useNavigate();
     useEffect(() => {
         const loadCredentials = async () => {
-            if (!masterPassword) return;
+            if (!masterPassword || !email) return;
             try {
-                const encryptedData = await fetchCredentials();
-                const decryptedCredentials = await Promise.all(
-                    encryptedData.map(async (credential) => {
-                        return {
-                            id: credential.id,
-                            serviceName: await decryptCredential(credential.serviceName, masterPassword),
-                            username: await decryptCredential(credential.username, masterPassword),
-                            password: await decryptCredential(credential.password, masterPassword),
-                        };
-                    })
-                );
-                setCredentials(decryptedCredentials);
+                const encryptedData = await fetchCredentials(email);
+                const credentialsWithEncryptedData = encryptedData.map((credential) => ({
+                    id: credential.id,
+                    serviceName: credential.serviceName,
+                    encryptedUsername: credential.username,
+                    encryptedPassword: credential.password,
+                }));
+                setCredentials(credentialsWithEncryptedData);
+
+                if (credentialsWithEncryptedData.length === 0) {
+                    navigate("/credentialForm");
+                }
             } catch (error) {
                 console.error("Error loading credentials:", error);
             }
         };
         loadCredentials();
-    }, [masterPassword, decryptCredential]);
+    }, [masterPassword, email, navigate]);
 
     return (
         <div className="p-8">
-            <h1 className="text-3xl font-bold mb-6">Password Library</h1>
-            <CredentialsList credentials={credentials} setCredentials={setCredentials}/>
+            <CredentialsList credentials={credentials} setCredentials={setCredentials} />
         </div>
     );
 };

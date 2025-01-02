@@ -51,11 +51,11 @@ const EditCredential = () => {
                 }
 
 
-                const decryptedServiceName = await decryptCredential(data.serviceName, masterPassword);
+                
                 const decryptedUsername = await decryptCredential(data.username, masterPassword);
                 const decryptedPassword = await decryptCredential(data.password, masterPassword);
 
-                setServiceName(decryptedServiceName.toString(CryptoJS.enc.Utf8));
+                setServiceName(data.serviceName);
                 setUsername(decryptedUsername.toString(CryptoJS.enc.Utf8));
                 setPassword(decryptedPassword.toString(CryptoJS.enc.Utf8));
 
