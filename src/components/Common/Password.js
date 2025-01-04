@@ -31,9 +31,9 @@ const Password = ({ value, onChange, error, id, label, placeholder }) => {
                     className="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700"
                 >
                     {showPassword ? (
-                        <AiOutlineEye size={20} />
-                    ) : (
                         <AiOutlineEyeInvisible size={20} />
+                    ) : (
+                        <AiOutlineEye size={20} />
                     )}
                 </button>
                 </div>

@@ -11,6 +11,7 @@ import { EmailProvider } from './components/Context/EmailContext';
 import LoginForm from './components/Auth/LoginForm';
 import CredentialDashboard from "./components/Credential/CredentialDashboard";
 import EditCredential from './components/Credential/EditCredential';
+import LandingPage from './components/Common/LandingPage';
 
 function App() {
 
@@ -21,7 +22,8 @@ function App() {
         <Router>
           <NavBar />
           <Routes>
-            <Route path="/" element={<SignupForm />} />
+          <Route path="/" element={<LandingPage />} />
+            <Route path="/signup" element={<SignupForm />} />
             <Route path="/loginForm" element={<LoginForm />} />
             <Route path="/credentialForm" element={<CredentialForm />} />
             <Route path="/credential-dashboard" element={<CredentialDashboard />} />

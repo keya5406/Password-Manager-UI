@@ -23,7 +23,7 @@ const LoginForm = () => {
         <div>
             <form
                 onSubmit={handleSubmit}
-                className="max-w-md mx-auto p-6 bg-blue-50 flex-grow w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 md:p-6 bg-blue-50 rounded-lg shadow-lg mt-20 space-y-0"
+                className="max-w-md mx-auto p-6 bg-blue-50 flex-grow w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 md:p-6 bg-blue-50 rounded-lg shadow-lg mt-28 space-y-0"
             >
                 <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
 
@@ -48,7 +48,7 @@ const LoginForm = () => {
                 Don’t have an account?{' '}
                 <button
                     className="text-blue-900 underline ml-0"
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/signup')}
                 >
                     Signup
                 </button>
