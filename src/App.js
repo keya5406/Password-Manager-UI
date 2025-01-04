@@ -6,23 +6,26 @@ import NavBar from './components/Common/NavBar';
 import CredentialForm from './components/Credential/CredentialForm';
 import Footer from './components/Common/Footer';
 import SignupForm from './components/Auth/SignupForm';
+import { MasterPasswordProvider } from './components/Auth/MasterPasswordContext';
 import LoginForm from './components/Auth/LoginForm';
+
 function App() {
 
   return (
-    <div className="bg-blue-100 min-h-screen flex flex-col">
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<SignupForm />} />
-          <Route path="/loginForm" element={<LoginForm />} />
-          <Route path="/credentialForm" element={<CredentialForm />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <Footer />
-      </Router>
-
-    </div>
+    <MasterPasswordProvider>
+      <div className="bg-blue-100 min-h-screen flex flex-col">
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<SignupForm />} />
+            <Route path="/loginForm" element={<LoginForm />} />
+            <Route path="/credentialForm" element={<CredentialForm />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </div>
+    </MasterPasswordProvider>
   );
 }
 
