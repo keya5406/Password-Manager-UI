@@ -12,6 +12,8 @@ import LoginForm from './components/Auth/LoginForm';
 import CredentialDashboard from "./components/Credential/CredentialDashboard";
 import EditCredential from './components/Credential/EditCredential';
 import LandingPage from './components/Common/LandingPage';
+import { ToastContainer } from 'react-toastify';  
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -30,6 +32,7 @@ function App() {
             <Route path="/edit-credential/:id" element={<EditCredential />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          <ToastContainer />
           <Footer />
         </Router>
       </div>

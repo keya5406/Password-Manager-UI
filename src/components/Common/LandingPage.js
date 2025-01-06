@@ -69,7 +69,7 @@ const LandingPage = () => {
       <section id="contact" className="py-16 px-6 bg-blue-100 text-center rounded-lg mt-12">
         <h3 className="text-3xl font-bold mb-10 text-gray-900">Contact Us</h3>
         <p className="text-lg text-gray-600 mb-6">Have questions? We're here to help!</p>
-        <a href="mailto:keya01127@gmail.com" className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Contact Support</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=keya01127@gmail.com"  className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Contact Support</a>
       </section>
 
     </div>

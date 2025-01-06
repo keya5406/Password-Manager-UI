@@ -91,12 +91,12 @@ const CredentialsList = ({ credentials, setCredentials }) => {
               {expandedServices.includes(credential.id) && (
                 <>
 
-                  <p className="text-gray-700 mb-2">
+                  <p className="text-gray-700  mb-2  break-words">
                     <span className="font-semibold">Username: </span>
                     {credential.username}
                   </p>
 
-                  <p className="text-gray-700 mb-4">
+                  <p className="text-gray-700  mb-4  break-words">
                     <span className="font-semibold">Password: </span>
                     {credential.password}
                   </p>
