@@ -2,7 +2,7 @@ import React from 'react';
 
 const FormInput = ({
   label,
-  type = "text",
+  type = 'text',
   id,
   name,
   placeholder,

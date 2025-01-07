@@ -3,14 +3,20 @@ import { useKeyGenerator } from './keyGenerator';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 
-const useHandleSubmit = (masterPassword) => {
+const useHandleSubmit = masterPassword => {
   const [formErrors, setFormErrors] = useState({});
   const { generateKeyFromMasterPassword } = useKeyGenerator();
 
-  const handleSubmit = async (event, serviceName, username, password, resetForm, email) => {
+  const handleSubmit = async (
+    event,
+    serviceName,
+    username,
+    password,
+    resetForm,
+    email
+  ) => {
     event.preventDefault();
     let newErrors = {};
-
 
     if (!serviceName) {
       newErrors.serviceName = 'Service Name is required.';
@@ -30,22 +36,19 @@ const useHandleSubmit = (masterPassword) => {
       return;
     }
 
-
     const encryptionKey = await generateKeyFromMasterPassword(masterPassword);
-    
+
     const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey, {
       mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7
+      padding: CryptoJS.pad.Pkcs7,
     }).toString();
     const encryptedPassword = CryptoJS.AES.encrypt(password, encryptionKey, {
       mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7
+      padding: CryptoJS.pad.Pkcs7,
     }).toString();
 
-
-
     const payload = {
-      serviceName ,
+      serviceName,
       username: encryptedUsername,
       password: encryptedPassword,
     };
