@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useMasterPassword } from '../Auth/MasterPasswordContext';
+import { useMasterPassword } from '../Context/MasterPasswordContext';
 import useHandleSubmit from './useHandleSubmit';
 import Button from '../UI/Button';
 import FormInput from './FormInput';
-
+import { useNavigate } from "react-router-dom";
 
 const CredentialForm = () => {
+  const navigate = useNavigate();
   const [serviceName, setServiceName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -62,6 +63,13 @@ const CredentialForm = () => {
           />
         </Button>
       </form>
+
+      <Button
+        type="button"
+        text="Manage Passwords"
+        onClick={() => navigate('/credential-dashboard')}
+        className="mt-4"
+      />
     </section>
 
   );

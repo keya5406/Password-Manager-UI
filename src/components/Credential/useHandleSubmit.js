@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { generateKeyFromMasterPassword } from './keyGenerator';
+import { useKeyGenerator } from './keyGenerator';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 
 const useHandleSubmit = (masterPassword) => {
   const [formErrors, setFormErrors] = useState({});
+  const { generateKeyFromMasterPassword } = useKeyGenerator();
 
   const handleSubmit = async (event, serviceName, username, password, resetForm) => {
     event.preventDefault();
     let newErrors = {};
 
-    
+
     if (!serviceName) {
       newErrors.serviceName = 'Service Name is required.';
     }
@@ -31,11 +32,24 @@ const useHandleSubmit = (masterPassword) => {
       return;
     }
 
-   
-    const encryptionKey = generateKeyFromMasterPassword(masterPassword).toString(CryptoJS.enc.Hex);
-    const encryptedServiceName = CryptoJS.AES.encrypt(serviceName, encryptionKey).toString();
-    const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey).toString();
-    const encryptedPassword = CryptoJS.AES.encrypt(password, encryptionKey).toString();
+
+    const encryptionKey = await generateKeyFromMasterPassword(masterPassword);
+    const encryptionKeyHex = encryptionKey.toString(CryptoJS.enc.Hex);
+    console.log("Generated Key:", encryptionKeyHex);
+    const encryptedServiceName = CryptoJS.AES.encrypt(serviceName, encryptionKey, {
+      mode: CryptoJS.mode.ECB, 
+      padding: CryptoJS.pad.Pkcs7 
+    }).toString();
+    const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey,  {
+      mode: CryptoJS.mode.ECB, 
+      padding: CryptoJS.pad.Pkcs7 
+    }).toString();
+    const encryptedPassword = CryptoJS.AES.encrypt(password, encryptionKey,  {
+      mode: CryptoJS.mode.ECB, 
+      padding: CryptoJS.pad.Pkcs7 
+    }).toString();
+    console.log("Encrypted Password:", encryptedPassword);
+
 
     const payload = {
       serviceName: encryptedServiceName,

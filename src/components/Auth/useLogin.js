@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { fetchSalt, login } from './loginApi.js';
 import { hashPassword } from '../Utils/cryptoUtils.js';
 import { useNavigate } from 'react-router-dom';
-import { useMasterPassword } from './MasterPasswordContext.js';
+import { useMasterPassword } from '../Context/MasterPasswordContext.js';
+import { useEmail } from "../Context/EmailContext.js";
 
 export const useLogin = () => {
     const navigate = useNavigate();
     const { setMasterPassword } = useMasterPassword();
-    const [email, setEmail] = useState('');
+    const { setEmail } = useEmail()
+    const [email, setUserEmail] = useState('');
     const [masterPassword, setMasterPasswordState] = useState('');
     const [error, setError] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -41,8 +43,10 @@ export const useLogin = () => {
 
             if (response.status === 200) {
                 setMasterPassword(masterPassword);
+                setEmail(email);
                 navigate('/credentialForm');
                 setMasterPasswordState('');
+                setUserEmail('');
             } else {
                 setError({ form: 'Invalid email or password.' });
             }
@@ -55,7 +59,7 @@ export const useLogin = () => {
 
     return {
         email,
-        setEmail,
+        setUserEmail,
         masterPassword,
         setMasterPasswordState,
         error,
