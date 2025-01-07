@@ -5,6 +5,7 @@ import { generateSalt, hashPassword, isValidEmail, passwordPattern } from '../Ut
 const useSignupForm = (navigate) => {
     const [email, setEmail] = useState('');
     const [masterPassword, setMasterPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -22,6 +23,10 @@ const useSignupForm = (navigate) => {
         } else if (!passwordPattern.test(masterPassword)) {
             newErrors.password =
                 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.';
+        }
+
+        if (masterPassword !== confirmPassword) {
+            newErrors.confirmPassword = 'Passwords do not match.'; 
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -65,6 +70,8 @@ const useSignupForm = (navigate) => {
         setEmail,
         masterPassword,
         setMasterPassword,
+        confirmPassword, 
+        setConfirmPassword, 
         error,
         isLoading,
         isSuccess,  

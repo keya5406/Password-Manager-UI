@@ -10,7 +10,7 @@ import SuccessMessage from '../UI/SuccessMessage';
 
 const SignupForm = () => {
     const navigate = useNavigate();
-    const { email, setEmail, masterPassword, setMasterPassword, error, isLoading, isSuccess, handleSubmit } = useSignupForm(navigate);
+    const { email, setEmail, masterPassword, setMasterPassword, confirmPassword, setConfirmPassword, error, isLoading, isSuccess, handleSubmit } = useSignupForm(navigate);
 
 
     return (
@@ -21,8 +21,27 @@ const SignupForm = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
-                    <Email value={email} onChange={(e) => setEmail(e.target.value)} error={error.email} />
-                    <Password value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} error={error.password} />
+                    <Email
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        error={error.email}
+                    />
+                    <Password
+                        value={masterPassword}
+                        onChange={(e) => setMasterPassword(e.target.value)}
+                        error={error.password}
+                        id="masterPassword"
+                        label="Master Password:"
+                        placeholder="Enter Master Password"
+                    />
+                    <Password
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        error={error.confirmPassword}
+                        id="confirmPassword"
+                        label="Confirm Password:"
+                        placeholder="Re-enter Master Password"
+                    />
 
 
                     {isLoading ? <Loader /> : <Button text="Sign Up" type="submit" />}
