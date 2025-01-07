@@ -40,5 +40,5 @@ export const useKeyGenerator = () => {
     }
   };
 
-  return { generateKeyFromMasterPassword, fetchSalt };
+  return { generateKeyFromMasterPassword };
 };
