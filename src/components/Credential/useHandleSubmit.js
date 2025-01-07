@@ -7,7 +7,7 @@ const useHandleSubmit = (masterPassword) => {
   const [formErrors, setFormErrors] = useState({});
   const { generateKeyFromMasterPassword } = useKeyGenerator();
 
-  const handleSubmit = async (event, serviceName, username, password, resetForm) => {
+  const handleSubmit = async (event, serviceName, username, password, resetForm, email) => {
     event.preventDefault();
     let newErrors = {};
 
@@ -32,10 +32,7 @@ const useHandleSubmit = (masterPassword) => {
 
 
     const encryptionKey = await generateKeyFromMasterPassword(masterPassword);
-    const encryptedServiceName = CryptoJS.AES.encrypt(serviceName, encryptionKey, {
-      mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7
-    }).toString();
+    
     const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey, {
       mode: CryptoJS.mode.ECB,
       padding: CryptoJS.pad.Pkcs7
@@ -48,13 +45,13 @@ const useHandleSubmit = (masterPassword) => {
 
 
     const payload = {
-      serviceName: encryptedServiceName,
+      serviceName ,
       username: encryptedUsername,
       password: encryptedPassword,
     };
 
     try {
-      const response = await axios.post('/api/credentials', payload, {
+      const response = await axios.post(`/api/credentials/${email}`, payload, {
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.status !== 201) {

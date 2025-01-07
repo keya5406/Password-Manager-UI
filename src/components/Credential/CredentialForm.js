@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMasterPassword } from '../Context/MasterPasswordContext';
+import { useEmail } from '../Context/EmailContext';
 import useHandleSubmit from './useHandleSubmit';
 import Button from '../UI/Button';
 import FormInput from './FormInput';
@@ -13,6 +14,7 @@ const CredentialForm = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const { masterPassword } = useMasterPassword();
+  const {email} = useEmail();
   const { handleSubmit, formErrors } = useHandleSubmit(masterPassword);
 
   const resetForm = () => {
@@ -26,7 +28,7 @@ const CredentialForm = () => {
       <h2 className="text-xl md:text-2xl font-semibold mb-4">Securely store and manage your passwords</h2>
       <form
         id="passwordForm"
-        onSubmit={(e) => handleSubmit(e, serviceName, username, password, resetForm)}
+        onSubmit={(e) => handleSubmit(e, serviceName, username, password, resetForm, email)}
         className="space-y-4"
       >
         <FormInput

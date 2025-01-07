@@ -51,11 +51,11 @@ const EditCredential = () => {
                 }
 
 
-                const decryptedServiceName = await decryptCredential(data.serviceName, masterPassword);
+                
                 const decryptedUsername = await decryptCredential(data.username, masterPassword);
                 const decryptedPassword = await decryptCredential(data.password, masterPassword);
 
-                setServiceName(decryptedServiceName.toString(CryptoJS.enc.Utf8));
+                setServiceName(data.serviceName);
                 setUsername(decryptedUsername.toString(CryptoJS.enc.Utf8));
                 setPassword(decryptedPassword.toString(CryptoJS.enc.Utf8));
 
@@ -84,11 +84,7 @@ const EditCredential = () => {
 
         try {
             const encryptionKey = await generateKeyFromMasterPassword(masterPassword);
-            const encryptedServiceName = CryptoJS.AES.encrypt(serviceName, encryptionKey, {
-                mode: CryptoJS.mode.ECB,
-                padding: CryptoJS.pad.Pkcs7,
-            }).toString();
-
+           
             const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey, {
                 mode: CryptoJS.mode.ECB,
                 padding: CryptoJS.pad.Pkcs7,
@@ -100,7 +96,7 @@ const EditCredential = () => {
             }).toString();
 
             const updatedCredential = {
-                serviceName: encryptedServiceName,
+                serviceName,
                 username: encryptedUsername,
                 password: encryptedPassword,
             };

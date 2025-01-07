@@ -12,6 +12,7 @@ const UserMenu = () => {
     const handleLogout = () => {
         localStorage.removeItem("userToken");
         setEmail(null);
+        setIsOpen(false);
         alert("Logged out successfully");
         navigate("/loginForm");
     };

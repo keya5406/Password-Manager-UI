@@ -44,7 +44,7 @@ export const useLogin = () => {
             if (response.status === 200) {
                 setMasterPassword(masterPassword);
                 setEmail(email);
-                navigate('/credentialForm');
+                navigate('/credential-dashboard');
                 setMasterPasswordState('');
                 setUserEmail('');
             } else {

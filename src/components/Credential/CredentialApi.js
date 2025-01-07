@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const fetchCredentials = async () => {
+export const fetchCredentials = async (email) => {
     try {
-        const { data } = await axios.get('/api/credentials');
+        const { data } = await axios.get(`/api/credentials/user/${email}`);
         return data;
     } catch (error) {
         let errorMessage = 'Something went wrong. Please try again.';
