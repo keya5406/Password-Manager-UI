@@ -13,10 +13,10 @@ const NavBar = () => {
   return (
     <nav className="flex items-center justify-between p-4 h-16 fixed w-full top-0 left-0 bg-blue-300 bg-opacity-50 backdrop-blur-sm transition-all ease-in-out shadow-md hover:shadow-lg">
       <h1 className="text-3xl md:text-4xl lg:text-5xl flex items-center ml-2">
-        <span className="text-black font-poppins font-extrabold tracking-wide">
+        <span className="text-black font-dynapuff font-bold tracking-wide">
           Pass
         </span>
-        <span className="ml-1 text-blue-700 font-barlow-condensed font-bold tracking-widest">
+        <span className="ml-1 text-blue-700 font-dynapuff font-bold tracking-widest">
           EZ
         </span>
       </h1>
