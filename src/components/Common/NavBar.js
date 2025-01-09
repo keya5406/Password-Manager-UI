@@ -65,6 +65,7 @@ const NavBar = () => {
           </svg>
           <SlOptionsVertical className="text-black w-6 h-6" />
         </button>
+        <UserMenu />
       </div>
 
       {/* Mobile menu */}
