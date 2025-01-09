@@ -1,16 +1,17 @@
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import { useEmail } from '../Context/EmailContext';
-
+import config from '../../config';
 export const useKeyGenerator = () => {
   const { email } = useEmail();
+  const apiUrl = config.apiUrl;
 
   const fetchSalt = async () => {
     if (!email) {
       throw new Error('Email is required to fetch salt.');
     }
     try {
-      const response = await axios.get('/api/salt', { params: { email } });
+      const response = await axios.get(`${apiUrl}/api/salt`, { params: { email } });
       if (!response.data?.Salt) {
         throw new Error('Salt not found in response.');
       }
@@ -23,6 +24,7 @@ export const useKeyGenerator = () => {
 
   const generateKeyFromMasterPassword = async masterPassword => {
     try {
+      
       const salt = await fetchSalt();
       const parsedSalt = CryptoJS.enc.Hex.parse(salt);
 

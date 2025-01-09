@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useKeyGenerator } from './keyGenerator';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import CryptoJS from 'crypto-js';
+import config from '../../config';
 
 const EditCredential = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const EditCredential = () => {
   const { generateKeyFromMasterPassword } = useKeyGenerator();
   const { decryptCredential } = useCredentialDecryption();
   const [showPassword, setShowPassword] = useState(false);
+  const apiUrl = config.apiUrl;
 
   const [serviceName, setServiceName] = useState('');
   const [username, setUsername] = useState('');
@@ -36,7 +38,7 @@ const EditCredential = () => {
           throw new Error('Master password is required to decrypt the data.');
         }
 
-        const response = await fetch(`/api/credentials/${id}`);
+        const response = await fetch(`${apiUrl}/api/credentials/${id}`);
         if (response.status === 404) {
           throw new Error('Credential not found');
         }
@@ -104,7 +106,7 @@ const EditCredential = () => {
         password: encryptedPassword,
       };
 
-      const response = await fetch(`/api/credentials/${id}`, {
+      const response = await fetch(`${apiUrl}/api/credentials/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -1,8 +1,10 @@
 import axios from 'axios';
+import config from '../../config';
 
 export const fetchSalt = async email => {
+  const apiUrl = config.apiUrl;
   try {
-    const response = await axios.get('/api/salt', { params: { email } });
+    const response = await axios.get(`${apiUrl}/api/salt`, { params: { email } });
     return response.data?.Salt;
   } catch (error) {
     throw new Error(

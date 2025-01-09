@@ -1,8 +1,10 @@
 import axios from 'axios';
+import config from '../../config';
 
 export const fetchCredentials = async email => {
+  const apiUrl = config.apiUrl;
   try {
-    const { data } = await axios.get(`/api/credentials/user/${email}`);
+    const { data } = await axios.get(`${apiUrl}/api/credentials/user/${email}`);
     return data;
   } catch (error) {
     let errorMessage = 'Something went wrong. Please try again.';

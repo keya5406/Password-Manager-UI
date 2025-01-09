@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import config from '../../config';
 
 export const handleDelete = async (credentialId, setCredentials) => {
   const { isConfirmed } = await Swal.fire({
@@ -18,8 +19,9 @@ export const handleDelete = async (credentialId, setCredentials) => {
   });
 
   if (isConfirmed) {
+    const apiUrl = config.apiUrl;
     try {
-      const response = await fetch(`/api/credentials/${credentialId}`, {
+      const response = await fetch(`${apiUrl}/api/credentials/${credentialId}`, {
         method: 'DELETE',
       });
 

@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useKeyGenerator } from './keyGenerator';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
+import config from '../../config';
 
 const useHandleSubmit = masterPassword => {
   const [formErrors, setFormErrors] = useState({});
   const { generateKeyFromMasterPassword } = useKeyGenerator();
+  const apiUrl = config.apiUrl;
 
   const handleSubmit = async (
     event,
@@ -54,7 +56,7 @@ const useHandleSubmit = masterPassword => {
     };
 
     try {
-      const response = await axios.post(`/api/credentials/${email}`, payload, {
+      const response = await axios.post(`${apiUrl}/api/credentials/${email}`, payload, {
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.status !== 201) {
