@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SlOptionsVertical } from 'react-icons/sl';
+import { useEmail } from '../Context/EmailContext';
 import UserMenu from './UserMenu';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { email } = useEmail();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -23,30 +25,34 @@ const NavBar = () => {
 
       {/* Desktop menu */}
       <ul className="hidden md:flex space-x-6 text-blue-700">
-        <li>
-          <Link
-            to="/#home"
-            className="hover:text-blue-700 transition-colors text-lg md:text-xl"
-          >
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/#features"
-            className="hover:text-blue-700 transition-colors text-lg md:text-xl"
-          >
-            Features
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/#contact"
-            className="hover:text-blue-700 transition-colors text-lg md:text-xl"
-          >
-            Contact
-          </Link>
-        </li>
+        {!email && (
+          <>
+            <li>
+              <Link
+                to="/#home"
+                className="hover:text-blue-700 transition-colors text-lg md:text-xl"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/#features"
+                className="hover:text-blue-700 transition-colors text-lg md:text-xl"
+              >
+                Features
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/#contact"
+                className="hover:text-blue-700 transition-colors text-lg md:text-xl"
+              >
+                Contact
+              </Link>
+            </li>
+          </>
+        )}
         <UserMenu />
       </ul>
 
@@ -69,7 +75,7 @@ const NavBar = () => {
       </div>
 
       {/* Mobile menu */}
-      {isOpen && (
+      {isOpen && !email && (
         <ul className="absolute top-16 left-0 w-full bg-blue-100 flex flex-col items-center space-y-4 py-4 md:hidden rounded-lg shadow-lg">
           <li>
             <Link

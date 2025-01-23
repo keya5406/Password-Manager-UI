@@ -14,8 +14,9 @@ export const fetchSalt = async email => {
 };
 
 export const login = async (email, hashedPassword) => {
+  const apiUrl = config.apiUrl;
   try {
-    const response = await axios.post('/api/login', { email, hashedPassword });
+    const response = await axios.post(`${apiUrl}/api/login`, { email, hashedPassword });
     return response;
   } catch (error) {
     throw new Error('Email or password is incorrect. Please try again.');

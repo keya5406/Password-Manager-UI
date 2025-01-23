@@ -20,7 +20,8 @@ const LandingPage = () => {
   return (
     <div className="bg-blue-50 text-gray-800">
       {/* Hero Section */}
-      <section className="bg-white py-16 px-6 text-center md:text-left md:flex md:items-center md:justify-between rounded-lg">
+      <section className="bg-white py-16 px-6 text-center md:text-left md:flex md:items-center md:justify-between rounded-lg mt-8 md:mt-0">
+
         <div className="md:w-1/2">
           <h2 className="text-4xl font-semibold mb-4 text-gray-900">
             Secure Your Digital Life
@@ -30,8 +31,8 @@ const LandingPage = () => {
             encryption technology.
           </p>
           <div className="space-x-4">
-          <Link
-              to={email ? '/credential-dashboard' : '/signup'} 
+            <Link
+              to={email ? '/credential-dashboard' : '/signup'}
               className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
             >
               Get Started
@@ -51,6 +52,21 @@ const LandingPage = () => {
             className="w-full rounded-lg "
           />
         </div>
+      </section>
+
+      {/* Home Section */}
+      <section
+        id="home"
+        className="py-16 px-6 bg-blue-100 text-center rounded-lg mt-12"
+      >
+        <h3 className="text-3xl font-bold mb-10 text-gray-900">
+          Welcome to PassEZ
+        </h3>
+        <p className="text-lg text-gray-600 mb-6">
+          Manage your passwords securely with our simple, effective solution.
+          Our app gives you peace of mind with cutting-edge encryption and easy
+          access.
+        </p>
       </section>
 
       {/* Features Section */}
@@ -78,28 +94,26 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Home Section */}
-      <section
-        id="home"
-        className="py-16 px-6 bg-blue-100 text-center rounded-lg mt-12"
-      >
-        <h3 className="text-3xl font-bold mb-10 text-gray-900">
-          Welcome to PassEZ
+      {/* Know More About Passez Section */}
+      <section className="py-16 px-6 bg-blue-100 text-center rounded-lg mt-12 max-w-4xl mx-auto sm:px-8 md:px-8 shadow-lg">
+        <h3 className="text-3xl font-bold mb-6 text-gray-900">
+          Inside PassEZ
         </h3>
-        <p className="text-lg text-gray-600 mb-6">
-          Manage your passwords securely with our simple, effective solution.
-          Our app gives you peace of mind with cutting-edge encryption and easy
-          access.
+        <p className="text-gray-700 mb-8">
+          Passez ensures your data stays private with end-to-end encryption and zero-knowledge design. Our technology prevents unauthorized access, even from us. From secure password generation to effortless management, every feature is crafted to simplify your digital life while keeping it protected. Discover how we make security seamless.
         </p>
+        <div className="flex justify-center">
+          <a
+            href="/PWM-documentation.pdf"
+            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 inline-block"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download Documentation (PDF)
+          </a>
+        </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-16 px-6 bg-blue-50 text-center rounded-lg mt-12">
-        <h3 className="text-3xl font-bold mb-10 text-gray-900">
-          What Our Users Say
-        </h3>
-        <p className="text-gray-500 italic">"Coming soon..."</p>
-      </section>
 
       {/* Contact Section */}
       <section

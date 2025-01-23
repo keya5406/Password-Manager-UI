@@ -3,13 +3,12 @@ import { fetchCredentials } from './CredentialApi.js';
 import CredentialsList from './CredentialList.js';
 import { useMasterPassword } from '../Context/MasterPasswordContext.js';
 import { useEmail } from '../Context/EmailContext.js';
-import { useNavigate } from 'react-router-dom';
 
 const CredentialDashboard = () => {
   const [credentials, setCredentials] = useState([]);
   const { masterPassword } = useMasterPassword();
   const { email } = useEmail();
-  const navigate = useNavigate();
+
   useEffect(() => {
     const loadCredentials = async () => {
       if (!masterPassword || !email) return;
@@ -23,15 +22,13 @@ const CredentialDashboard = () => {
         }));
         setCredentials(credentialsWithEncryptedData);
 
-        if (credentialsWithEncryptedData.length === 0) {
-          navigate('/credentialForm');
-        }
+       
       } catch (error) {
         console.error('Error loading credentials:', error);
       }
     };
     loadCredentials();
-  }, [masterPassword, email, navigate]);
+  }, [masterPassword, email]);
 
   return (
     <div className="p-8">

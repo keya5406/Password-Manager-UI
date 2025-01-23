@@ -4,6 +4,7 @@ import { useEmail } from '../Context/EmailContext';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DeleteUser from './DeleteUser';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,6 +64,7 @@ const UserMenu = () => {
           >
             Log Out
           </button>
+          <DeleteUser />
         </div>
       )}
     </div>

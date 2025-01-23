@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import config from '../../config';
 
-export const handleDelete = async (credentialId, setCredentials) => {
+export const handleDelete = async (credentialId, setCredentials, setLoading) => {
   const { isConfirmed } = await Swal.fire({
     title: 'Are you sure?',
     text: 'You will not be able to recover this password!',
@@ -20,6 +20,7 @@ export const handleDelete = async (credentialId, setCredentials) => {
 
   if (isConfirmed) {
     const apiUrl = config.apiUrl;
+    setLoading(true);
     try {
       const response = await fetch(`${apiUrl}/api/credentials/${credentialId}`, {
         method: 'DELETE',
@@ -74,6 +75,8 @@ export const handleDelete = async (credentialId, setCredentials) => {
           color: '#b91c1c',
         },
       });
+    }finally {
+      setLoading(false); 
     }
   }
 };

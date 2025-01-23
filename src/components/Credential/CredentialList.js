@@ -17,6 +17,7 @@ const CredentialsList = ({ credentials, setCredentials }) => {
   const { decryptCredential } = useCredentialDecryption();
   const { masterPassword } = useMasterPassword();
   const [expandedServices, setExpandedServices] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleEditClick = credentialId => {
     navigate(`/edit-credential/${credentialId}`);
@@ -28,6 +29,7 @@ const CredentialsList = ({ credentials, setCredentials }) => {
         prevExpanded.filter(serviceId => serviceId !== id)
       );
     } else {
+      setLoading(true);
       const updatedCredentials = await Promise.all(
         credentials.map(async credential => {
           if (credential.id === id && !credential.decrypted) {
@@ -51,6 +53,7 @@ const CredentialsList = ({ credentials, setCredentials }) => {
       );
       setCredentials(updatedCredentials);
       setExpandedServices(prevExpanded => [...prevExpanded, id]);
+      setLoading(false);
     }
   };
 
@@ -62,7 +65,7 @@ const CredentialsList = ({ credentials, setCredentials }) => {
 
         <div className="ml-auto">
           <button
-            className="px-4 py-2 bg-blue-100 hover:bg-blue-200 rounded-lg text-sm flex items-center gap-2 transition-colors"
+            className="px-4 py-2 bg-blue-300 hover:bg-blue-400 bg-opacity-50 rounded-lg text-sm flex items-center gap-2 transition-colors"
             onClick={() => navigate('/credentialForm')}
           >
             <AiOutlinePlus className="w-5 h-5" />
@@ -71,7 +74,11 @@ const CredentialsList = ({ credentials, setCredentials }) => {
         </div>
       </h2>
 
-      {credentials.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center mt-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      ) : credentials.length === 0 ? (
         <p className="text-gray-500 text-lg">No credentials saved yet.</p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -114,7 +121,7 @@ const CredentialsList = ({ credentials, setCredentials }) => {
                     <button
                       className="text-red-500 hover:text-red-700"
                       onClick={() =>
-                        handleDelete(credential.id, setCredentials)
+                        handleDelete(credential.id, setCredentials, setLoading)
                       }
                     >
                       <AiOutlineDelete className="w-5 h-5" />
