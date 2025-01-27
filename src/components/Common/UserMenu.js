@@ -16,6 +16,10 @@ const UserMenu = () => {
     localStorage.removeItem('userToken');
     setEmail(null);
     setIsOpen(false);
+
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('encryptedMasterPassword');
+
     toast.success('Logged out successfully', {
       position: 'top-center',
       autoClose: 2000,
