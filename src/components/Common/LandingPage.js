@@ -32,11 +32,14 @@ const LandingPage = () => {
           </p>
           <div className="space-x-4">
             <Link
-              to={email ? '/credential-dashboard' : '/signup'}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+              to="/signup"
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 text-center"
             >
-              Get Started
+              <span className="md:hidden">Sign Up</span>
+              <span className="hidden md:inline">Get Started</span>
             </Link>
+
+
             <a
               href="#features"
               className="text-blue-900 underline hover:text-blue-600"
