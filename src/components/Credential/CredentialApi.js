@@ -3,7 +3,7 @@ import config from '../../config';
 
 export const fetchCredentials = async email => {
   const apiUrl = config.apiUrl;
-  try {
+   try {
     const { data } = await axios.get(`${apiUrl}/api/credentials/user/${email}`);
     return data;
   } catch (error) {

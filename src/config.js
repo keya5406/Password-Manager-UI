@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: 'https://pwm-backend.onrender.com',
+    apiUrl: "https://pwm-backend.onrender.com",
   };
   
   export default config;

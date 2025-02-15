@@ -39,7 +39,7 @@ const LoginForm = () => {
           label="Master Password:"
           placeholder="Enter Master Password"
         />
-        {isLoading ? <Loader /> : <Button text="Log In" type="submit" />}
+        {isLoading ? <div className="mb-4"><Loader /></div> : <Button text="Log In" type="submit" />}
         {error.form && <p className="text-red-500 mt-4">{error.form}</p>}
       </form>
 

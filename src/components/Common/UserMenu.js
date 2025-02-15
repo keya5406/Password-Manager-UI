@@ -4,6 +4,7 @@ import { useEmail } from '../Context/EmailContext';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DeleteUser from './DeleteUser';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,10 @@ const UserMenu = () => {
     localStorage.removeItem('userToken');
     setEmail(null);
     setIsOpen(false);
+
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('encryptedMasterPassword');
+
     toast.success('Logged out successfully', {
       position: 'top-center',
       autoClose: 2000,
@@ -63,6 +68,7 @@ const UserMenu = () => {
           >
             Log Out
           </button>
+          <DeleteUser />
         </div>
       )}
     </div>

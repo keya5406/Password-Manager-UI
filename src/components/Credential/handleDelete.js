@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import config from '../../config';
 
 export const handleDelete = async (credentialId, setCredentials) => {
+  let loading = true; 
+
   const { isConfirmed } = await Swal.fire({
     title: 'Are you sure?',
     text: 'You will not be able to recover this password!',
@@ -20,7 +22,7 @@ export const handleDelete = async (credentialId, setCredentials) => {
 
   if (isConfirmed) {
     const apiUrl = config.apiUrl;
-    try {
+       try {
       const response = await fetch(`${apiUrl}/api/credentials/${credentialId}`, {
         method: 'DELETE',
       });
@@ -74,6 +76,8 @@ export const handleDelete = async (credentialId, setCredentials) => {
           color: '#b91c1c',
         },
       });
+    } finally {
+      loading = false;
     }
   }
 };

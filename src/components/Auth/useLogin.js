@@ -4,6 +4,7 @@ import { hashPassword } from '../Utils/cryptoUtils.js';
 import { useNavigate } from 'react-router-dom';
 import { useMasterPassword } from '../Context/MasterPasswordContext.js';
 import { useEmail } from '../Context/EmailContext.js';
+import { encryptPassword, generateEncryptionKey } from '../Utils/SecurityUtils.js';
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -45,9 +46,17 @@ export const useLogin = () => {
       const response = await login(email, hashedPassword);
 
       if (response.status === 200) {
+        const encryptionKey = generateEncryptionKey(email, salt);
+
+        const encryptedMasterPassword = encryptPassword(masterPassword, encryptionKey);
+
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('encryptedMasterPassword', encryptedMasterPassword);
+
         setMasterPassword(masterPassword);
         setEmail(email);
         navigate('/credential-dashboard');
+
         setMasterPasswordState('');
         setUserEmail('');
       } else {

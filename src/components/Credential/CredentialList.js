@@ -12,12 +12,13 @@ import {
 } from 'react-icons/ai';
 import { handleDelete } from './handleDelete';
 
-const CredentialsList = ({ credentials, setCredentials }) => {
+const CredentialsList = ({ credentials, setCredentials, loading }) => {
   const navigate = useNavigate();
   const { decryptCredential } = useCredentialDecryption();
   const { masterPassword } = useMasterPassword();
   const [expandedServices, setExpandedServices] = useState([]);
-
+ 
+  
   const handleEditClick = credentialId => {
     navigate(`/edit-credential/${credentialId}`);
   };
@@ -28,6 +29,7 @@ const CredentialsList = ({ credentials, setCredentials }) => {
         prevExpanded.filter(serviceId => serviceId !== id)
       );
     } else {
+     
       const updatedCredentials = await Promise.all(
         credentials.map(async credential => {
           if (credential.id === id && !credential.decrypted) {
@@ -51,35 +53,41 @@ const CredentialsList = ({ credentials, setCredentials }) => {
       );
       setCredentials(updatedCredentials);
       setExpandedServices(prevExpanded => [...prevExpanded, id]);
+    
     }
   };
 
   return (
-    <section className="w-full max-w-4xl mx-auto p-6 bg-blue-100 rounded-xl shadow-xl mt-10">
-      <h2 className="text-3xl font-semibold mb-8 flex items-center">
-        <PiUserListFill className="w-10 h-10 mr-4" />
-        <span>My Passwords</span>
+    <section className="w-full max-w-4xl mx-auto p-4 sm:p-6 bg-blue-100 rounded-xl shadow-xl mt-6 sm:mt-10">
+      <h2 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 flex flex-wrap items-center">
+        <PiUserListFill className="w-8 h-8 sm:w-10 sm:h-10 mr-3 sm:mr-4" />
+        <span className="text-lg sm:text-xl">My Passwords</span>
 
-        <div className="ml-auto">
+        <div className="ml-auto mt-2 sm:mt-0">
           <button
-            className="px-4 py-2 bg-blue-100 hover:bg-blue-200 rounded-lg text-sm flex items-center gap-2 transition-colors"
+            className="px-3 py-2 sm:px-4 sm:py-2 md:px-5 md:py-3 bg-blue-300 hover:bg-blue-400 bg-opacity-50 rounded-lg text-xs sm:text-sm md:text-base flex items-center gap-2 transition-colors"
             onClick={() => navigate('/credentialForm')}
           >
-            <AiOutlinePlus className="w-5 h-5" />
-            <span>Add Password</span>
+            <AiOutlinePlus className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline">Add Password</span>
           </button>
         </div>
       </h2>
 
-      {credentials.length === 0 ? (
+      {loading && (
+        <div className="flex justify-center items-center mt-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      )}
+
+      {credentials.length === 0 && (
         <p className="text-gray-500 text-lg">No credentials saved yet.</p>
-      ) : (
+      )}
+
+      {!loading && credentials.length > 0 && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {credentials.map(credential => (
-            <div
-              key={credential.id}
-              className="p-3 bg-blue-50 bg-opacity-70 rounded-2xl shadow-lg border border-blue-200 transition-transform transform hover:scale-105 "
-            >
+            <div key={credential.id} className="p-3 bg-blue-50 bg-opacity-70 rounded-2xl shadow-lg border border-blue-200 transition-transform transform hover:scale-105">
               <h3 className="text-xl font-semibold mb-3 flex justify-between items-center">
                 <span>{credential.serviceName}</span>
                 <button
@@ -95,12 +103,11 @@ const CredentialsList = ({ credentials, setCredentials }) => {
               </h3>
               {expandedServices.includes(credential.id) && (
                 <>
-                  <p className="text-gray-700  mb-2  break-words">
+                  <p className="text-gray-700 mb-2 break-words">
                     <span className="font-semibold">Username: </span>
                     {credential.username}
                   </p>
-
-                  <p className="text-gray-700  mb-4  break-words">
+                  <p className="text-gray-700 mb-4 break-words">
                     <span className="font-semibold">Password: </span>
                     {credential.password}
                   </p>
@@ -113,9 +120,7 @@ const CredentialsList = ({ credentials, setCredentials }) => {
                     </button>
                     <button
                       className="text-red-500 hover:text-red-700"
-                      onClick={() =>
-                        handleDelete(credential.id, setCredentials)
-                      }
+                      onClick={() => handleDelete(credential.id, setCredentials)}
                     >
                       <AiOutlineDelete className="w-5 h-5" />
                     </button>
